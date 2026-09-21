@@ -8,7 +8,7 @@ from pathlib import Path
 from datetime import datetime
 
 import streamlit as st
-import fitz
+import pymupdf
 from docx import Document
 from openai import OpenAI
 
@@ -290,7 +290,7 @@ def read_pdf_text(file_path):
     尝试读取 PDF 文本层。
     """
 
-    doc = fitz.open(file_path)
+    doc = pymupdf.open(file_path)
 
     pages = []
 
@@ -310,7 +310,7 @@ def pdf_to_images(file_path, max_pages=8, scale=1.5):
     将 PDF 前 max_pages 页转换为图片。
     """
 
-    doc = fitz.open(file_path)
+    doc = pymupdf.open(file_path)
 
     images = []
 
@@ -319,7 +319,7 @@ def pdf_to_images(file_path, max_pages=8, scale=1.5):
     for i in range(page_count):
         page = doc.load_page(i)
 
-        matrix = fitz.Matrix(scale, scale)
+        matrix = pymupdf.Matrix(scale, scale)
 
         pix = page.get_pixmap(
             matrix=matrix,
